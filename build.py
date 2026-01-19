@@ -163,7 +163,7 @@ class Build:
             '--gn-args', f'is_termux_host={utils.__TERMUX__}',
             '--gn-args', f'termux_api_level={api}',
             '--gn-args', 'extra_ldflags=["-lEGL", "-lGLESv2"]',
-            # FIX: Suppress unknown warning errors caused by compiler version mismatch
+            # --- FIX: Add these to ignore unknown warning flags ---
             '--gn-args', 'extra_cflags=["-Wno-unknown-warning-option"]',
             '--gn-args', 'extra_cxxflags=["-Wno-unknown-warning-option"]',
         ]
@@ -194,6 +194,7 @@ class Build:
         else:
             return self.release
 
+    # TODO: check gclient and ninja existence
     def __call__(self):
         self.config()
         self.clone()
