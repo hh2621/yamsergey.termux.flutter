@@ -163,6 +163,9 @@ class Build:
             '--gn-args', f'is_termux_host={utils.__TERMUX__}',
             '--gn-args', f'termux_api_level={api}',
             '--gn-args', 'extra_ldflags=["-lEGL", "-lGLESv2"]',
+            # FIX: Suppress unknown warning errors caused by compiler version mismatch
+            '--gn-args', 'extra_cflags=["-Wno-unknown-warning-option"]',
+            '--gn-args', 'extra_cxxflags=["-Wno-unknown-warning-option"]',
         ]
         subprocess.run(cmd, cwd=root, check=True, stdout=True, stderr=True)
 
@@ -171,12 +174,6 @@ class Build:
         cmd = [
             'ninja', '-C', utils.target_output(root, arch, mode),
             'flutter',
-            # disable zip_archives
-            # 'flutter/build/archives:artifacts',
-            # 'flutter/build/archives:dart_sdk_archive',
-            # 'flutter/build/archives:flutter_patched_sdk',
-            # 'flutter/shell/platform/linux:flutter_gtk',
-            # 'flutter/tools/font_subset',
         ]
         if jobs:
             cmd.append(f'-j{jobs}')
@@ -197,7 +194,6 @@ class Build:
         else:
             return self.release
 
-    # TODO: check gclient and ninja existence
     def __call__(self):
         self.config()
         self.clone()
