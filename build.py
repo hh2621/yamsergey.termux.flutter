@@ -163,9 +163,6 @@ class Build:
             '--gn-args', f'is_termux_host={utils.__TERMUX__}',
             '--gn-args', f'termux_api_level={api}',
             '--gn-args', 'extra_ldflags=["-lEGL", "-lGLESv2"]',
-            # --- FIX: Add these to ignore unknown warning flags ---
-            '--gn-args', 'extra_cflags=["-Wno-unknown-warning-option"]',
-            '--gn-args', 'extra_cxxflags=["-Wno-unknown-warning-option"]',
         ]
         subprocess.run(cmd, cwd=root, check=True, stdout=True, stderr=True)
 
