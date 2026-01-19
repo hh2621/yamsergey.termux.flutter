@@ -11,7 +11,12 @@ jobs:
 
     - name: install deps
       run: sudo apt update && sudo apt install libfreetype-dev ninja-build -y
-
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
     - name: setup depot-tools
       uses: newkdev/setup-depot-tools@v1.0.1
 
